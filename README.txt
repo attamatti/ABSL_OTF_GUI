@@ -7,7 +7,7 @@ INSTALLATION:
 
 1) put all of the files somewhere
 
-2) Update the submission_path and filespath variables in lines 11 and 12
+2) update the submission_path and filespath variables in lines 11 and 12
 	- submission_path should point to your copy of new_OTF.sh
 	- filespath should point to the directory where the files are located (make sure there is a '/' on the end)	
 
@@ -19,6 +19,9 @@ RUNNING:
 
 3) run the GUI from inside the project directory
 
+CHECKING STATUS WHIST RUNNING:
+
+1) run the command: cat nohup.out
 
 MANUALLY STOPPING THE PROGRAM:
 
