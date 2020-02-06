@@ -19,6 +19,8 @@ RUNNING:
 
 3) run the GUI from inside the project directory
 
+4) Setup your Import/Motioncorr/CTF in Relion as normal
+
 CHECKING STATUS WHIST RUNNING:
 
 1) run the command: cat nohup.out
