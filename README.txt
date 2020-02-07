@@ -11,6 +11,7 @@ University of Leeds use ONLY
 	- submission_path should point to your copy of new_OTF.sh
 	- filespath should point to the directory where the files are located (make sure there is a '/' on the end)	
 
+
 :: RUNNING ::
 
 1) make sure you are using python 3 (currently the command is: module load anaconda3/2018.12)
@@ -19,20 +20,20 @@ University of Leeds use ONLY
 
 3) run the GUI from inside the project directory
 
-<<<<<<< HEAD
+4) Setup your Import/Motioncorr/CTF in Relion as normal
+
+
 :: TROUBLESHOOTING ::
 
 THE PROGRAM THINKS IT'S RUNNING - BUT IT'S NOT...
 
 1) run the command: rm OTFFT_running
 
-=======
-4) Setup your Import/Motioncorr/CTF in Relion as normal
 
 CHECKING STATUS WHIST RUNNING:
 
 1) run the command: cat nohup.out
->>>>>>> 43013abc9270418e70c29150c221944a35a9d104
+
 
 MANUALLY STOPPING THE PROGRAM:
 
