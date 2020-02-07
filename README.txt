@@ -24,15 +24,14 @@ University of Leeds use ONLY
 
 
 :: TROUBLESHOOTING ::
+CHECKING STATUS WHIST RUNNING:
+
+1) run the command: cat nohup.out
+
 
 THE PROGRAM THINKS IT'S RUNNING - BUT IT'S NOT...
 
 1) run the command: rm OTFFT_running
-
-
-CHECKING STATUS WHIST RUNNING:
-
-1) run the command: cat nohup.out
 
 
 MANUALLY STOPPING THE PROGRAM:
@@ -40,9 +39,9 @@ MANUALLY STOPPING THE PROGRAM:
 The processes started by this script are nohupped and therefore a bit hard to kill manually.
 If you need to kill this after it has started running:
 
-1) run the the command: ps -ef | grep '/bin/sh'
+1) run the the command: ps -uef | grep '/bin/sh'
 
-2) get the PID of the running script from the output above
+2) get the PID of the running script from the output
 
 3) run the command: kill -9 <PID>
 
@@ -51,3 +50,14 @@ If you need to kill this after it has started running:
 5) run the command: rm OTFFT_running
 
 
+I KEEP GETTING THE 'PYTHON 3 IS REQUIRED' ERROR... I THOUGH I WAS RUNNING PYTHON 3!
+
+1) you're probably not
+
+2) run the command: python --version
+
+3) if the version is > 3.X I'm sorry for doubting you
+
+4) run the commmand: python -m tkinter - A test GUI should appear. 
+
+5) If it doesn't the tkinter module is not installed correctly- run the command: pip install tkinter --user 
