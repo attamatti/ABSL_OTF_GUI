@@ -58,6 +58,7 @@ I KEEP GETTING THE 'PYTHON 3 IS REQUIRED' ERROR... I THOUGH I WAS RUNNING PYTHON
 
 3) if the version is > 3.X I'm sorry for doubting you
 
-4) run the commmand: python -m tkinter - A test GUI should appear. 
+4) run the commmand: python -m tkinter
+A test GUI should appear. 
 
 5) If it doesn't the tkinter module is not installed correctly- run the command: pip install tkinter --user 
