@@ -3,7 +3,7 @@
 University of Leeds use ONLY
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-INSTALLATION:
+:: INSTALLATION ::
 
 1) put all of the files somewhere
 
@@ -11,13 +11,19 @@ INSTALLATION:
 	- submission_path should point to your copy of new_OTF.sh
 	- filespath should point to the directory where the files are located (make sure there is a '/' on the end)	
 
-RUNNING:
+:: RUNNING ::
 
 1) make sure you are using python 3 (currently the command is: module load anaconda3/2018.12)
 
 2) make your project directory 
 
 3) run the GUI from inside the project directory
+
+:: TROUBLESHOOTING ::
+
+THE PROGRAM THINKS IT'S RUNNING - BUT IT'S NOT...
+
+1) run the command: rm OTFFT_running
 
 
 MANUALLY STOPPING THE PROGRAM:
@@ -32,3 +38,7 @@ If you need to kill this after it has started running:
 3) run the command: kill -9 <PID>
 
 4) run the command: pkill rsync
+
+5) run the command: rm OTFFT_running
+
+

@@ -36,3 +36,4 @@ current_time=$(date +%s)
 done
 
 python /fbs/emsoftware2/LINUX/fbscem/scripts/fetch/scripts_fetch/micrograph_analysis.py --i CtfFind/job003/micrographs_ctf.star
+rm OTFFT_running

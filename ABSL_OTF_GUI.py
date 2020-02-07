@@ -1,10 +1,18 @@
 #!/usr/bin/env python
 
-from tkinter import *
-from tkinter import filedialog
-from tkinter import messagebox
 import subprocess
 import os
+import sys
+
+try:
+    from tkinter import *
+    from tkinter import filedialog
+    from tkinter import messagebox
+except:
+    sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
+
+
+
 
 ## Hello
 vers = '0.3'
@@ -13,11 +21,11 @@ filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
 
 ## general config
 root = Tk()
-root.title('ABSL OTF {0}'.format(vers))
+root.title('ABSL OTF-FT {0}'.format(vers))
 root.configure(background='white')
 
 ## title and logos
-title = Label(root,text='OTF File Transfer Utility vers {0}'.format(vers))
+title = Label(root,text='OTF File Transfer Utility'.format(vers))
 title.grid(column=1,row=0,columnspan=2)
 title.configure(background='white')
 
@@ -123,10 +131,27 @@ def do_it():
     if timecheck == True and PNcheck == True and datacheck == True:
         subprocess.call('nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval),shell=True)
         print('RUNNING: nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval))
+        runningfile = open('OTFFT_running','w')
+        runningfile.write('{0};{1};{2}'.format(dataval,PNval,timeval))
+        runningfile.close()
         runmsg.config(text='File transfer is running you can now close the GUI',foreground='green')
+        doit.config(state='disabled')
 
 doit = Button(root, text="Run", command=do_it,width=20)
 doit.grid(column=1, row=5)
+
+## make it inactive if already running
+if os.path.isfile('OTFFT_running') == True:
+    doit.config(state='disabled')
+    runmsg.config(text='File transfer is already running',foreground='green')
+    vals = open('OTFFT_running','r').readlines()[0].split(';')
+    data.insert(0,vals[0])
+    data.config(state='disabled')
+    PN.insert(0,vals[1])
+    PN.config(state='disabled')
+    time.insert(0,str(int(vals[2])/360))
+    time.config(state='disabled')
+    btn.config(state='disabled')
 
 ## the quit function
 def close_window (): 
