@@ -25,7 +25,7 @@ University of Leeds use ONLY
 5) to kill the process press the kill button, if this causes an error follow the instructions for killing a job manually
 
 :: TROUBLESHOOTING ::
-CHECKING STATUS WHIST RUNNING:
+CHECKING STATUS WHILST RUNNING:
 
 1) run the command: cat nohup.out
 
