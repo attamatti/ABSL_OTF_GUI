@@ -22,6 +22,7 @@ University of Leeds use ONLY
 
 4) Setup your Import/Motioncorr/CTF in Relion as normal
 
+5) to kill the process press the kill button, if this causes an error follow the instructions for killing a job manually
 
 :: TROUBLESHOOTING ::
 CHECKING STATUS WHIST RUNNING:
@@ -39,9 +40,9 @@ MANUALLY STOPPING THE PROGRAM:
 The processes started by this script are nohupped and therefore a bit hard to kill manually.
 If you need to kill this after it has started running:
 
-1) run the the command: ps -uef | grep '/bin/sh'
+1) run the the command: ps -u
 
-2) get the PID of the running script from the output
+2) get the PID of the running script from the output it will be /bin/sh and have new_OTF.sh somewhere in the program name
 
 3) run the command: kill -9 <PID>
 

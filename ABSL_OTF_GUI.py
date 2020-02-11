@@ -15,7 +15,7 @@ except:
 
 
 ## Hello
-vers = '0.3'
+vers = '0.4'
 submission_path = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/new_OTF.sh'
 filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
 
@@ -135,14 +135,30 @@ def do_it():
         runningfile.write('{0};{1};{2}'.format(dataval,PNval,timeval))
         runningfile.close()
         runmsg.config(text='File transfer is running you can now close the GUI',foreground='green')
-        doit.config(state='disabled')
+        doit.config(text='KILL',foreground='red',command=kill)
+
+def kill():
+    running = str(subprocess.check_output(["ps","-u"])).split("\\n")
+    for i in running:
+        line = i.split()
+        if 'new_OTF.sh' in i:
+            PID = line[1]
+    try:
+        subprocess.call('kill -9 {0}'.format(PID),shell=True)
+        subprocess.call('pkill rsync',shell=True)
+        subprocess.call('rm OTFFT_running',shell=True)
+        print('OTF file transfer has been stopped')
+        runmsg.config(text='File transfer killed; restart the GUI to begin again',foreground='red')
+
+    except:
+        messagebox.showerror("ERROR","Some sort of error has occuerd\nplease kill the job manually and restart the GUI")
 
 doit = Button(root, text="Run", command=do_it,width=20)
 doit.grid(column=1, row=5)
-
+    
 ## make it inactive if already running
 if os.path.isfile('OTFFT_running') == True:
-    doit.config(state='disabled')
+    doit.config(text='KILL',foreground='red',command=kill)
     runmsg.config(text='File transfer is already running',foreground='green')
     vals = open('OTFFT_running','r').readlines()[0].split(';')
     data.insert(0,vals[0])
@@ -152,6 +168,7 @@ if os.path.isfile('OTFFT_running') == True:
     time.insert(0,str(int(vals[2])/360))
     time.config(state='disabled')
     btn.config(state='disabled')
+
 
 ## the quit function
 def close_window (): 
