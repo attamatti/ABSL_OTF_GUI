@@ -1,0 +1,32 @@
+job_type == 1
+is_continue == false
+Pixel size (A): == 1.065
+Bfactor: == 150
+Binning factor: == 1
+Do dose-weighting? == Yes
+Use RELION's own implementation? == Yes
+Submit to queue? == No
+Dose per frame (e/A2): == 1
+First frame for corrected sum: == 1
+Defect file: == 
+Gain-reference image: == 
+MOTIONCOR2 executable: == /absl/EM/emsoftware2/env-modules/install/motioncor2/MotionCor2_1.2.1-Cuda92
+Gain flip: == No flipping (0)
+Gain rotation: == No rotation (0)
+Which GPUs to use: == 0
+Group frames: == 1
+Input movies STAR file: == Import/job001/movies.star
+Last frame for corrected sum: == -1
+Minimum dedicated cores per node: == 1
+Number of MPI procs: == 16
+Number of threads: == 1
+Additional arguments: == 
+Other MOTIONCOR2 arguments == 
+Number of patches X: == 5
+Number of patches Y: == 5
+Pre-exposure (e/A2): == 0
+Queue submit command: == qsub
+Standard submission script: == /public/EM/RELION/relion/bin/relion_qsub.csh
+Queue name:  == openmpi
+Save non-dose weighted as well? == No
+Voltage (kV): == 300

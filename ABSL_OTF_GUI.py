@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 
+########################  UPDATE THIS PATH  ##############################
+filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
+##########################################################################
+
 import subprocess
 import os
 import sys
+import glob
 
 try:
     from tkinter import *
@@ -11,15 +16,22 @@ try:
 except:
     sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
 
+## hello
+vers = '0.6'
+print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
-
-
-## Hello
-vers = '0.4'
-submission_path = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/new_OTF.sh'
-filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
+## check that all of the files needed to run the gui are available
+files = glob.glob('{0}/*.*'.format(filespath))
+filesfound=True
+for i in ['new_OTF.sh','gui_ctffindrun.job','gui_importrun.job','gui_motioncorrrun.job']:
+    if '{0}{1}'.format(filespath,i) not in files:
+        filesfound=False
+        print('ERROR: The file {0} was not found ABSL_OTF_GUI.py was not set up properly... Check the README file!'.format(i))
+if filesfound == False:
+    sys.exit('ERROR: Search path was: {0}\nERROR: Setup problem... exiting'.format(filespath))
 
 ## general config
+submission_path = '{0}new_OTF.sh'.format(filespath)
 root = Tk()
 root.title('ABSL OTF-FT {0}'.format(vers))
 root.configure(background='white')
@@ -97,7 +109,7 @@ def do_it():
     print('run it!')
     if os.path.isdir('Raw_data') == False:
         subprocess.call('mkdir Raw_data',shell=True)
-
+    ## check the data path
     dataval = data.get()  
     if len(dataval) > 1:
         datacheck= True  
@@ -112,33 +124,40 @@ def do_it():
     else:
         messagebox.showerror('ERROR','No data directory selected!')
         datacheck=False
-
+    ## check the project name
     PNval = PN.get()  
     if len(PNval) > 1:
         PNcheck= True  
     else:
         messagebox.showerror('ERROR','No project dir name specified!')
         PNcheck=False
-
+    if ' ' in PNval:
+        messagebox.showerror('ERROR','NO SPACES IN PROJECT NAMES!\nYou should know better!')
+        PNcheck=False
+    ## check the time requested
     try:
         timeval=(int(time.get())*60*60)
         timecheck = True
-        print(timeval)
     except:
        messagebox.showerror('ERROR','Run length value is invalid!')
        timecheck=False
-    
+    ## if it's all good start the transfer
     if timecheck == True and PNcheck == True and datacheck == True:
+        subprocess.call('cp {0}/gui_ctffindrun.job .gui_ctffindrun.job'.format(filespath),shell=True)
+        subprocess.call('cp {0}/gui_importrun.job .gui_importrun.job'.format(filespath),shell=True)
+        subprocess.call('cp {0}/gui_motioncorrrun.job .gui_motioncorrrun.job'.format(filespath),shell=True)
+        subprocess.call('touch .gui_projectdir',shell=True)
         subprocess.call('nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval),shell=True)
         print('RUNNING: nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval))
         runningfile = open('OTFFT_running','w')
         runningfile.write('{0};{1};{2}'.format(dataval,PNval,timeval))
         runningfile.close()
-        runmsg.config(text='File transfer is running you can now close the GUI',foreground='green')
+        runmsg.config(text='File transfer is running you can now close the GUI and set up Relion',foreground='green')
         doit.config(text='KILL',foreground='red',command=kill)
 
+## kill function - only active if running
 def kill():
-    running = str(subprocess.check_output(["ps","-u"])).split("\\n")
+    running = str(subprocess.check_output(["ps","-uef"])).split("\\n")
     for i in running:
         line = i.split()
         if 'new_OTF.sh' in i:
@@ -151,23 +170,27 @@ def kill():
         runmsg.config(text='File transfer killed; restart the GUI to begin again',foreground='red')
 
     except:
-        messagebox.showerror("ERROR","Some sort of error has occuerd\nplease kill the job manually and restart the GUI")
+        messagebox.showerror("ERROR","Some sort of error has occured\nERROR: please kill the job manually and restart the GUI")
 
 doit = Button(root, text="Run", command=do_it,width=20)
 doit.grid(column=1, row=5)
     
-## make it inactive if already running
+## if the transfer is already running
 if os.path.isfile('OTFFT_running') == True:
     doit.config(text='KILL',foreground='red',command=kill)
     runmsg.config(text='File transfer is already running',foreground='green')
-    vals = open('OTFFT_running','r').readlines()[0].split(';')
-    data.insert(0,vals[0])
-    data.config(state='disabled')
-    PN.insert(0,vals[1])
-    PN.config(state='disabled')
-    time.insert(0,str(int(vals[2])/360))
-    time.config(state='disabled')
-    btn.config(state='disabled')
+    try:
+        vals = open('OTFFT_running','r').readlines()[0].split(';')
+        data.insert(0,vals[0])
+        data.config(state='disabled')
+        PN.insert(0,vals[1])
+        PN.config(state='disabled')
+        time.insert(0,str(int(vals[2])/360))
+        time.config(state='disabled')
+        btn.config(state='disabled')
+    except:
+        sys.exit('\nERROR: There was a problem reading OTFFT_running\nERROR: delete it, manually kill any file transfer (see README), and start over')
+
 
 
 ## the quit function

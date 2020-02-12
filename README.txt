@@ -7,8 +7,7 @@ University of Leeds use ONLY
 
 1) put all of the files somewhere
 
-2) update the submission_path and filespath variables in lines 11 and 12
-	- submission_path should point to your copy of new_OTF.sh
+2) update the submission_path and filespath variables in line 3
 	- filespath should point to the directory where the files are located (make sure there is a '/' on the end)	
 
 
@@ -40,7 +39,7 @@ MANUALLY STOPPING THE PROGRAM:
 The processes started by this script are nohupped and therefore a bit hard to kill manually.
 If you need to kill this after it has started running:
 
-1) run the the command: ps -u
+1) run the the command: ps -uef | grep new_OTF 
 
 2) get the PID of the running script from the output it will be /bin/sh and have new_OTF.sh somewhere in the program name
 
