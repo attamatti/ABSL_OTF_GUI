@@ -20,6 +20,10 @@ except:
 vers = '0.6'
 print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
+if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
+    subprocess.call('cat {0}README.txt'.format(filespath),shell=True)
+    sys.exit()
+
 ## check that all of the files needed to run the gui are available
 files = glob.glob('{0}/*.*'.format(filespath))
 filesfound=True
