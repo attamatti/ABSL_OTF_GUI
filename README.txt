@@ -7,8 +7,8 @@ University of Leeds use ONLY
 
 1) put all of the files somewhere
 
-2) update the submission_path and filespath variables in line 3
-	- filespath should point to the directory where the files are located (make sure there is a '/' on the end)	
+2) update the filespath variables in line 3
+- filespath should point to the directory where the files are located (make sure there is a '/' on the end)	
 
 
 :: RUNNING ::
@@ -59,6 +59,6 @@ I KEEP GETTING THE 'PYTHON 3 IS REQUIRED' ERROR... I THOUGH I WAS RUNNING PYTHON
 3) if the version is > 3.X I'm sorry for doubting you
 
 4) run the commmand: python -m tkinter
-A test GUI should appear. 
+-A test GUI should appear. 
 
 5) If it doesn't the tkinter module is not installed correctly- run the command: pip install tkinter --user 
