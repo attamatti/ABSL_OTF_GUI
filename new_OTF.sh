@@ -8,7 +8,11 @@ src=$1
 project=$3
 savepath=$2$current_user/${todays_date}_${project}
 
-echo $savepath
+
+if [ ! -d $2$current_user ] 
+then
+    mkdir $2$current_user
+fi
 
 case "$4" in
 offload2)
