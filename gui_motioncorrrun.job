@@ -13,7 +13,7 @@ Gain-reference image: ==
 MOTIONCOR2 executable: == /absl/EM/emsoftware2/env-modules/install/motioncor2/MotionCor2_1.2.1-Cuda92
 Gain flip: == No flipping (0)
 Gain rotation: == No rotation (0)
-Which GPUs to use: == 0
+Which GPUs to use: == 0:1:2:3
 Group frames: == 1
 Input movies STAR file: == Import/job001/movies.star
 Last frame for corrected sum: == -1

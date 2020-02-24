@@ -35,7 +35,7 @@ if filesfound == False:
     sys.exit('ERROR: Search path was: {0}\nERROR: Setup problem... exiting'.format(filespath))
 
 ## general config
-submission_path = '{0}new_OTF.sh'.format(filespath)
+submission_path= '{0}new_OTF.sh'.format(filespath)
 root = Tk()
 root.title('ABSL OTF-FT {0}'.format(vers))
 root.configure(background='white')
@@ -85,7 +85,7 @@ PN = Entry(root,width=50)
 PN.grid(column=1,row=2,columnspan=2)
 
 def PNhelp():
-    messagebox.showinfo("Help","Give a name for you project directory\n it will be made on /absl/Equipment")
+    messagebox.showinfo("Help","Give a name for you project directory\n files will be saved in <username>/<projectname>/")
 PNhelp = Button(root,text = "help", command = PNhelp)
 PNhelp.grid(column=4,row=2)
 
@@ -102,10 +102,25 @@ def timehelp():
 timehelp = Button(root,text = "help", command = timehelp)
 timehelp.grid(column=4,row=3)
 
+## destination
+options = ['ABSL equipment (internal)','Globus upload (external)']
+destlabel = Label(root,text='Destination:')
+destlabel.configure(background='white')
+destlabel.grid(column=0,row=4)
+dvariable = StringVar(root)
+dvariable.set(options[0])
+destination = OptionMenu(root,dvariable,*options)
+destination.grid(column=1,row=4)
+destination.configure(background='white',width=20)
+
+def desthelp():
+    messagebox.showinfo("Help","Data for processing at Leeds should go to ABSL/equipment\nData that are to be trasferred externally should go to Globus")
+desthelp = Button(root,text = "help", command = desthelp)
+desthelp.grid(column=4,row=4)
 
 ## spot for running message to appear
 runmsg = Label(root,text=''.format(vers))
-runmsg.grid(column=1,row=4,columnspan=2)
+runmsg.grid(column=1,row=5,columnspan=2)
 runmsg.configure(background='white')
 
 ## the run function
@@ -123,13 +138,22 @@ def do_it():
     if len(dataval) > 1:
         datacheck= True  
         offload = dataval.split('/')[1]
-        if offload == 'offload1':
-            destination = '/absl/Equipment/KRIOS1/'
-        elif offload == 'offload2':
-            destination = '/absl/Equipment/GATAN/DoseFractions/'
-        else:
-            messagebox.showerror('ERROR',"That doesn't look like an offload server to me!")
-            datacheck=False
+        dvar = dvariable.get()
+        print(dvariable)
+        if dvar == 'ABSL equipment (internal)':
+            if offload == 'offload1':
+                destination = '/absl/Equipment/KRIOS1/'
+            elif offload == 'offload2':
+                destination = '/absl/Equipment/GATAN/DoseFractions/'
+            else:
+                messagebox.showerror('ERROR',"That doesn't look like an offload server to me!")
+                datacheck=False
+        elif dvar == 'Globus upload (external)':
+            if offload in ['offload1','offload2']:
+                destination = '/absl/Globus-Public-Folder/'
+            else:
+                messagebox.showerror('ERROR',"The selected data directory is not on an offload server")
+                datacheck=False
     else:
         messagebox.showerror('ERROR','No data directory selected!')
         datacheck=False
@@ -159,7 +183,7 @@ def do_it():
         subprocess.call('nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval),shell=True)
         print('RUNNING: nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval))
         runningfile = open('OTFFT_running','w')
-        runningfile.write('{0};{1};{2}'.format(dataval,PNval,timeval))
+        runningfile.write('{0};{1};{2};{3}'.format(dataval,PNval,timeval,dvar))
         runningfile.close()
         runmsg.config(text='File transfer is running you can now close the GUI and set up Relion',foreground='green')
         doit.config(text='KILL',foreground='red',command=kill)
@@ -182,7 +206,7 @@ def kill():
         messagebox.showerror("ERROR","Some sort of error has occured\nERROR: please kill the job manually and restart the GUI")
 
 doit = Button(root, text="Run", command=do_it,width=20)
-doit.grid(column=1, row=5)
+doit.grid(column=1, row=6)
     
 ## if the transfer is already running
 if os.path.isfile('OTFFT_running') == True:
@@ -197,6 +221,8 @@ if os.path.isfile('OTFFT_running') == True:
         time.insert(0,str(int(vals[2])/360))
         time.config(state='disabled')
         btn.config(state='disabled')
+        dvariable.set(vals[3])
+        destination.config(state='disabled')
     except:
         sys.exit('\nERROR: There was a problem reading OTFFT_running\nERROR: delete it, manually kill any file transfer (see README), and start over')
 
@@ -206,6 +232,6 @@ if os.path.isfile('OTFFT_running') == True:
 def close_window (): 
     root.destroy()
 quit = Button(root, text="Quit", command=close_window,width=20)
-quit.grid(column=2, row=5)
+quit.grid(column=2, row=6)
 
 root.mainloop()
