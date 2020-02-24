@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ########################  UPDATE THIS PATH  ##############################
-filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
+filespath = '/fbs/emsoftware2/LINUX/fbscem/scripts/ABSL_OTF_GUI/'
 ##########################################################################
 
 import subprocess
@@ -114,7 +114,12 @@ def do_it():
     if os.path.isdir('Raw_data') == False:
         subprocess.call('mkdir Raw_data',shell=True)
     ## check the data path
-    dataval = data.get()  
+    ## catch dave's error
+    dataval = data.get()
+    if dataval in ['/offload1','/offload2']:
+        messagebox.showerror('ERROR',"It appears that you are trying to sync the ENTIRE {0} server\nMake sure to double click and open the directory you want to sync.".format(dataval))
+        datacheck=False
+    ## make sure one of the offload servers has been selected
     if len(dataval) > 1:
         datacheck= True  
         offload = dataval.split('/')[1]
