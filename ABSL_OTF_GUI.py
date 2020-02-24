@@ -139,7 +139,6 @@ def do_it():
         datacheck= True  
         offload = dataval.split('/')[1]
         dvar = dvariable.get()
-        print(dvariable)
         if dvar == 'ABSL equipment (internal)':
             if offload == 'offload1':
                 destination = '/absl/Equipment/KRIOS1/'
