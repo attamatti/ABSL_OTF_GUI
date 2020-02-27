@@ -17,7 +17,7 @@ except:
     sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
 
 ## hello
-vers = '0.6'
+vers = '0.8'
 print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
 if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
