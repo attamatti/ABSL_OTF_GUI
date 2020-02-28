@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
 ########################  UPDATE THIS PATH  ##############################
-filespath = '/fbs/emsoftware2/LINUX/fbscem/scripts/ABSL_OTF_GUI/'
+#filespath = '/fbs/emsoftware2/LINUX/fbscem/scripts/ABSL_OTF_GUI/'
 ##########################################################################
+
+## for debugging
+filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
 
 import subprocess
 import os
@@ -17,7 +20,7 @@ except:
     sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
 
 ## hello
-vers = '0.9'
+vers = '0.91'
 print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
 if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
@@ -194,7 +197,7 @@ def do_it():
        timecheck=False
 	
     ## choose which script to use for data type
-    dtval = datatype.get()
+    dtval = dtvariable.get()
     scripts = {'Single particle (EPU)':'new_OTF.sh','Tomography (FEI)':'new_OTF_tomo.sh','Tomography (SerialEM)':'new_OTF_tomo_SerialEM.sh'}
     submission_path= '{0}{1}'.format(filespath,scripts[dtval])
 
@@ -208,7 +211,7 @@ def do_it():
         subprocess.call('nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval),shell=True)
         print('RUNNING: nohup {0} {1} {2} {3} {4} {5} &'.format(submission_path,dataval,destination,PNval,offload,timeval))
         runningfile = open('OTFFT_running','w')
-        runningfile.write('{0};{1};{2};{3}'.format(dataval,PNval,timeval,dvar))
+        runningfile.write('{0};{1};{2};{3};{4}'.format(dataval,PNval,timeval,dvar,dtval))
         runningfile.close()
         runmsg.config(text='File transfer is running you can now close the GUI and set up Relion',foreground='green')
         doit.config(text='KILL',foreground='red',command=kill)
@@ -218,7 +221,7 @@ def kill():
     running = str(subprocess.check_output(["ps","-uef"])).split("\\n")
     for i in running:
         line = i.split()
-        if 'new_OTF.sh' in i:
+        if 'new_OTF' in i:
             PID = line[1]
     try:
         subprocess.call('kill -9 {0}'.format(PID),shell=True)
@@ -246,8 +249,10 @@ if os.path.isfile('OTFFT_running') == True:
         time.insert(0,str(int(vals[2])/360))
         time.config(state='disabled')
         btn.config(state='disabled')
+        datatype.config(state='disabled')
         dvariable.set(vals[3])
         destination.config(state='disabled')
+        dtvariable.set(vals[4])
     except:
         sys.exit('\nERROR: There was a problem reading OTFFT_running\nERROR: delete it, manually kill any file transfer (see README), and start over')
 

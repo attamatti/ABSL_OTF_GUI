@@ -30,8 +30,8 @@ offload1)
 esac
 
 
-if [ ! -d "$save_path" ]; then
-    mkdir -p "$save_path"
+if [ ! -d "$savepath" ]; then
+    mkdir -p "$savepath"
 fi
 
 if [ ! -d "Raw_data" ]; then
@@ -48,8 +48,8 @@ echo "Start: $start_time End: $end_time"
 
 while [ $current_time -lt $end_time ]
 do
-rsync -rutlDv "$src/" "$save_path"
-ln -s $save_path$ext "Raw_data/" &>/dev/null
+rsync -rutlDv "$src/" "$savepath"
+ln -s $savepath$ext "Raw_data/" &>/dev/null
 if [ -f "CtfFind/job003/micrographs_ctf.star" ]
 then
 	python /fbs/emsoftware2/LINUX/fbscem/scripts/Tomo_OTF/tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
