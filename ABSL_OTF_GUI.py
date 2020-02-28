@@ -1,16 +1,28 @@
 #!/usr/bin/env python
 
 ########################  UPDATE THIS PATH  ##############################
-#filespath = '/fbs/emsoftware2/LINUX/fbscem/scripts/ABSL_OTF_GUI/'
+filespath = '/fbs/emsoftware2/LINUX/fbscem/scripts/ABSL_OTF_GUI/'
 ##########################################################################
-
-## for debugging
-filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
 
 import subprocess
 import os
 import sys
 import glob
+
+## for debugging
+if '--debug' in sys.argv:
+    print('''
+==============
+DEBUGGING MODE
+==============
+DEBUGGING MODE
+==============
+DEBUGGING MODE
+==============
+DEBUGGING MODE
+==============''')
+    filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
+
 
 try:
     from tkinter import *
@@ -20,7 +32,7 @@ except:
     sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
 
 ## hello
-vers = '0.91'
+vers = '0.9.2'
 print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
 if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
