@@ -21,6 +21,7 @@ DEBUGGING MODE
 ==============
 DEBUGGING MODE
 ==============''')
+    debug = True
     filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
 
 
@@ -32,7 +33,7 @@ except:
     sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
 
 ## hello
-vers = '0.9.2'
+vers = '0.9.2.r'
 print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
 if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
@@ -258,7 +259,7 @@ if os.path.isfile('OTFFT_running') == True:
         data.config(state='disabled')
         PN.insert(0,vals[1])
         PN.config(state='disabled')
-        time.insert(0,str(int(vals[2])/360))
+        time.insert(0,str(int(vals[2])/3600))
         time.config(state='disabled')
         btn.config(state='disabled')
         datatype.config(state='disabled')
