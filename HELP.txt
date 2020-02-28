@@ -1,0 +1,43 @@
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    GUI for ABSL OTF
+University of Leeds use ONLY
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+:: RUNNING ::
+1) make sure you are using python 3 (currently the command is: module load anaconda3/2018.12)
+2) make your project directory 
+3) run the GUI from inside the project directory
+4) Setup your Import/Motioncorr/CTF in Relion as normal
+5) to kill the process press the kill button, if this causes an error follow the instructions for killing a job manually
+
+:: TROUBLESHOOTING ::
+
+CHECKING STATUS WHILST RUNNING:
+1) run the command: cat nohup.out
+
+
+THE PROGRAM THINKS IT'S RUNNING - BUT IT'S NOT...
+1) run the command: rm OTFFT_running
+
+
+MANUALLY STOPPING THE PROGRAM:
+The processes started by this script are nohupped and therefore a bit hard to kill manually.
+If you need to kill this after it has started running:
+
+1) run the the command: ps -uef | grep new_OTF 
+2) get the PID of the running script from the output: 
+   it will be /bin/sh and have new_OTF.sh somewhere in the program name
+3) run the command: kill -9 <PID>
+4) run the command: pkill rsync
+5) run the command: rm OTFFT_running
+
+
+I KEEP GETTING THE 'PYTHON 3 IS REQUIRED' ERROR... I THOUGH I WAS RUNNING PYTHON 3!
+1) you're probably not
+2) run the command: python --version
+3) if the version is > 3.X I'm sorry for doubting you
+4) run the commmand: python -m tkinter
+5) A test GUI should appear 
+6) If it doesn't the tkinter module is not installed correctly- 
+   run the command: pip install tkinter --user 

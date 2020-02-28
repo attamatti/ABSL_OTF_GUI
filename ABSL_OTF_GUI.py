@@ -17,11 +17,11 @@ except:
     sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
 
 ## hello
-vers = '0.8'
+vers = '0.9'
 print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
 if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
-    subprocess.call('cat {0}README.txt'.format(filespath),shell=True)
+    subprocess.call('cat {0}HELP.txt'.format(filespath),shell=True)
     sys.exit()
 
 ## check that all of the files needed to run the gui are available
@@ -35,7 +35,6 @@ if filesfound == False:
     sys.exit('ERROR: Search path was: {0}\nERROR: Setup problem... exiting'.format(filespath))
 
 ## general config
-submission_path= '{0}new_OTF.sh'.format(filespath)
 root = Tk()
 root.title('ABSL OTF-FT {0}'.format(vers))
 root.configure(background='white')
@@ -118,22 +117,40 @@ def desthelp():
 desthelp = Button(root,text = "help", command = desthelp)
 desthelp.grid(column=4,row=4)
 
+## data type
+options = ['Single particle (EPU)','Tomography (FEI)','Tomography (SerialEM)']
+dtlabel = Label(root,text='Data type:')
+dtlabel.configure(background='white')
+dtlabel.grid(column=0,row=5)
+dtvariable = StringVar(root)
+dtvariable.set(options[0])
+datatype = OptionMenu(root,dtvariable,*options)
+datatype.grid(column=1,row=5)
+datatype.configure(background='white',width=20)
+
+def dthelp():
+    messagebox.showinfo("Help","Select the type of data")
+dathelp = Button(root,text = "help", command = dthelp)
+dathelp.grid(column=4,row=5)
+
 ## spot for running message to appear
 runmsg = Label(root,text=''.format(vers))
-runmsg.grid(column=1,row=5,columnspan=2)
+runmsg.grid(column=1,row=6,columnspan=2)
 runmsg.configure(background='white')
 
 ## the run function
 def do_it():
-    print('run it!')
     if os.path.isdir('Raw_data') == False:
         subprocess.call('mkdir Raw_data',shell=True)
+
     ## check the data path
-    ## catch dave's error
     dataval = data.get()
+
+    ## catch Dave's error - nice one Dave!
     if dataval in ['/offload1','/offload2']:
         messagebox.showerror('ERROR',"It appears that you are trying to sync the ENTIRE {0} server\nMake sure to double click and open the directory you want to sync.".format(dataval))
         datacheck=False
+
     ## make sure one of the offload servers has been selected
     if len(dataval) > 1:
         datacheck= True  
@@ -156,6 +173,7 @@ def do_it():
     else:
         messagebox.showerror('ERROR','No data directory selected!')
         datacheck=False
+
     ## check the project name
     PNval = PN.get()  
     if len(PNval) > 1:
@@ -166,6 +184,7 @@ def do_it():
     if ' ' in PNval:
         messagebox.showerror('ERROR','NO SPACES IN PROJECT NAMES!\nYou should know better!')
         PNcheck=False
+
     ## check the time requested
     try:
         timeval=(int(time.get())*60*60)
@@ -173,6 +192,13 @@ def do_it():
     except:
        messagebox.showerror('ERROR','Run length value is invalid!')
        timecheck=False
+	
+    ## choose which script to use for data type
+    dtval = datatype.get()
+    scripts = {'Single particle (EPU)':'new_OTF.sh','Tomography (FEI)':'new_OTF_tomo.sh','Tomography (SerialEM)':'new_OTF_tomo_SerialEM.sh'}
+    submission_path= '{0}{1}'.format(filespath,scripts[dtval])
+
+
     ## if it's all good start the transfer
     if timecheck == True and PNcheck == True and datacheck == True:
         subprocess.call('cp {0}/gui_ctffindrun.job .gui_ctffindrun.job'.format(filespath),shell=True)
@@ -205,7 +231,7 @@ def kill():
         messagebox.showerror("ERROR","Some sort of error has occured\nERROR: please kill the job manually and restart the GUI")
 
 doit = Button(root, text="Run", command=do_it,width=20)
-doit.grid(column=1, row=6)
+doit.grid(column=1, row=7)
     
 ## if the transfer is already running
 if os.path.isfile('OTFFT_running') == True:
@@ -231,6 +257,6 @@ if os.path.isfile('OTFFT_running') == True:
 def close_window (): 
     root.destroy()
 quit = Button(root, text="Quit", command=close_window,width=20)
-quit.grid(column=2, row=6)
+quit.grid(column=2, row=7)
 
 root.mainloop()
