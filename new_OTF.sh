@@ -36,12 +36,12 @@ rsync -rutlDv "$src/" "$savepath"
 ln -s $savepath/$ext Raw_data/ &>/dev/null
 if [ -f "CtfFind/job003/micrographs_ctf.star" ]
 then
-    python /fbs/emsoftware2/LINUX/fbscem/scripts/fetch/scripts_fetch/micrograph_analysis.py --i CtfFind/job003/micrographs_ctf.star
+    python $6micrograph_analysis.py --i CtfFind/job003/micrographs_ctf.star
 fi
 
 sleep 30
 current_time=$(date +%s)
 done
 
-python /fbs/emsoftware2/LINUX/fbscem/scripts/fetch/scripts_fetch/micrograph_analysis.py --i CtfFind/job003/micrographs_ctf.star
-rm OTFFT_running
+python $6micrograph_analysis.py --i CtfFind/job003/micrographs_ctf.star
+mv OTFFT_running OTFFT_finished

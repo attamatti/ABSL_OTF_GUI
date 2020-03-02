@@ -52,7 +52,7 @@ rsync -rutlDv "$src/" "$savepath"
 ln -s $savepath/$ext "Raw_data/" &>/dev/null
 if [ -f "CtfFind/job003/micrographs_ctf.star" ]
 then
-	python /fbs/emsoftware2/LINUX/fbscem/scripts/Tomo_OTF/tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
+	python $6tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
 fi
 cd To_stack
 ls ../MotionCorr/job002/Raw_data/*.mrc &&
@@ -61,7 +61,7 @@ cd ..
 sleep 30
 current_time=$(date +%s)
 done
-python /fbs/emsoftware2/LINUX/fbscem/scripts/Tomo_OTF/tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
+python $6tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
 
 cd To_stack
 ls ../MotionCorr/job002/Raw_data/*.mrc &&

@@ -53,21 +53,21 @@ rsync -rutlDv "$src/" "$savepath"
 ln -s $savepath/$ext "Raw_data/" &>/dev/null
 if [ -f "CtfFind/job003/micrographs_ctf.star" ]
 then
-	python /fbs/emsoftware2/LINUX/fbscem/scripts/Tomo_OTF/tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
+	python $6tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
 fi
 cd Renamed_MoCorr
 ls ../MotionCorr/job002/Raw_data/*.mrc &&
 ln -s ../MotionCorr/job002/Raw_data/*.mrc .
 cd ..
-python /fbs/emsoftware2/LINUX/fbscem/scripts/Tomo_OTF/tomo-rename.py Renamed_MoCorr/*[*.mrc
+python $6tomo-rename.py Renamed_MoCorr/*[*.mrc
 sleep 30
 current_time=$(date +%s)
 done
-python /fbs/emsoftware2/LINUX/fbscem/scripts/Tomo_OTF/tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
+python $6tomo-micrograph-analysis.py CtfFind/job003/micrographs_ctf.star
 
 
 cd Renamed_MoCorr
 ls ../MotionCorr/job002/Raw_data/*.mrc &&
 ln -s ../MotionCorr/job002/Raw_data/*.mrc .
 cd ..
-python /fbs/emsoftware2/LINUX/fbscem/scripts/Tomo_OTF/tomo-rename.py Renamed_MoCorr/*[*.mrc
+python $6tomo-rename.py Renamed_MoCorr/*[*.mrc
