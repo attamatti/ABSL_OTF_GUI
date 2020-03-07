@@ -10,6 +10,8 @@ import sys
 import glob
 
 ## for debugging
+vers = '0.9.3.r'
+debug = False
 if '--debug' in sys.argv:
     print('''
 ==============
@@ -22,7 +24,7 @@ DEBUGGING MODE
 DEBUGGING MODE
 ==============''')
     debug = True
-    filespath = '/fbs/emsoftware2/LINUX/fbsmi/scripts/workshop/GUI_otf/'
+    filespath = ''
 
 
 try:
@@ -33,7 +35,6 @@ except:
     sys.exit('\nERROR: Python 3 is required! - use module load anaconda3/2018.12')
 
 ## hello
-vers = '0.9.2.r'
 print('ABSL OTF file transfer utility vers {0}'.format(vers))
 
 if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
@@ -41,7 +42,7 @@ if '--help' in sys.argv or '-h' in sys.argv or '-help' in sys.argv:
     sys.exit()
 
 ## check that all of the files needed to run the gui are available
-files = glob.glob('{0}/*.*'.format(filespath))
+files = glob.glob('{0}*.*'.format(filespath))
 filesfound=True
 for i in ['new_OTF.sh','gui_ctffindrun.job','gui_importrun.job','gui_motioncorrrun.job']:
     if '{0}{1}'.format(filespath,i) not in files:
@@ -208,7 +209,7 @@ def do_it():
     except:
        messagebox.showerror('ERROR','Run length value is invalid!')
        timecheck=False
-	
+    
     ## choose which script to use for data type
     dtval = dtvariable.get()
     scripts = {'Single particle (EPU)':'new_OTF.sh','Tomography (FEI)':'new_OTF_tomo.sh','Tomography (SerialEM)':'new_OTF_tomo_SerialEM.sh'}
@@ -217,11 +218,12 @@ def do_it():
 
     ## if it's all good start the transfer
     if timecheck == True and PNcheck == True and datacheck == True:
-        subprocess.call('cp {0}/gui_ctffindrun.job .gui_ctffindrun.job'.format(filespath),shell=True)
-        subprocess.call('cp {0}/gui_importrun.job .gui_importrun.job'.format(filespath),shell=True)
-        subprocess.call('cp {0}/gui_motioncorrrun.job .gui_motioncorrrun.job'.format(filespath),shell=True)
+        subprocess.call('cp {0}gui_ctffindrun.job .gui_ctffindrun.job'.format(filespath),shell=True)
+        subprocess.call('cp {0}gui_importrun.job .gui_importrun.job'.format(filespath),shell=True)
+        subprocess.call('cp {0}gui_motioncorrrun.job .gui_motioncorrrun.job'.format(filespath),shell=True)
         subprocess.call('touch .gui_projectdir',shell=True)
-        subprocess.call('nohup {0} {1} {2} {3} {4} {5} {6} &'.format(submission_path,dataval,destination,PNval,offload,timeval,filespath),shell=True)
+        if debug == False:
+            subprocess.call('nohup {0} {1} {2} {3} {4} {5} {6} &'.format(submission_path,dataval,destination,PNval,offload,timeval,filespath),shell=True)
         print('RUNNING: nohup {0} {1} {2} {3} {4} {5} {6} &'.format(submission_path,dataval,destination,PNval,offload,timeval,filespath))
         runningfile = open('OTFFT_running','w')
         runningfile.write('{0};{1};{2};{3};{4}'.format(dataval,PNval,timeval,dvar,dtval))

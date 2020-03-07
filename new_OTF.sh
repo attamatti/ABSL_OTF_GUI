@@ -33,7 +33,13 @@ esac
 while [ $current_time -lt $end_time ]
 do
 rsync -rutlDv "$src/" "$savepath"
-ln -s $savepath/$ext Raw_data/ &>/dev/null
+
+dat=($savepath/$ext)
+if [ ${#dat[@]} -gt 0 ]
+then 
+    ln -s $savepath/$ext Raw_data/ &>/dev/null
+fi
+
 if [ -f "CtfFind/job003/micrographs_ctf.star" ]
 then
     python $6micrograph_analysis.py --i CtfFind/job003/micrographs_ctf.star
