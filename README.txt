@@ -3,21 +3,23 @@
 University of Leeds use ONLY
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-:: INSTALLATION ::
+::::: INSTALLATION :::::
 
 1) put all of the files somewhere
 
 2) update the filespath variables in line 3 if necessary
 	- filespath should point to the directory where the files are located (make sure there is a '/' on the end)	
 
-:: UPDATING ::
 
-1) In the directory where the program is insatlled run the command:
+::::: UPDATING :::::
+
+1) In the directory where the program is installed run the command:
 	
 	git pull 
 
+2) check that the filespath variable in line 3 is still correct
 
-:: RUNNING ::
+::::: RUNNING :::::
 
 1) make sure you are using python 3 (currently the command is: module load anaconda3/2018.12)
 
@@ -29,7 +31,7 @@ University of Leeds use ONLY
 
 5) to kill the process press the kill button, if this causes an error follow the instructions for killing a job manually
 
-:: OPTIONAL FLAGS ::
+::::: OPTIONAL FLAGS :::::
 
 --help		Print a help/troubleshooting message and exit
 
