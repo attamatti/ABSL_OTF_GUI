@@ -10,7 +10,7 @@ import sys
 import glob
 
 ## for debugging
-vers = '0.9.3.r'
+vers = '0.9.5.r'
 debug = False
 if '--debug' in sys.argv:
     print('''
@@ -24,8 +24,10 @@ DEBUGGING MODE
 DEBUGGING MODE
 ==============''')
     debug = True
-    filespath = ''
 
+if '--kill' in sys.argv:
+    subprocess.call('{0}OTF_GUI_hardkill.py'.format(filespath),shell=True)
+    sys.exit()
 
 try:
     from tkinter import *
