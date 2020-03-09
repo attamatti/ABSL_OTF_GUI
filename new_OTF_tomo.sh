@@ -54,7 +54,7 @@ rsync -rutlDv "$src/" "$savepath"
 dat=($savepath/$ext)
 if [ ${#dat[@]} -gt 0 ]
 then 
-    ln -s $savepath/$ext Raw_data/ &>/dev/null
+	for i in $savepath/$ext; do ln -s $i Raw_data/; done &>/dev/null
 fi
 
 if [ -f "CtfFind/job003/micrographs_ctf.star" ]
