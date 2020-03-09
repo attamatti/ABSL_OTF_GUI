@@ -21,9 +21,13 @@ THE PROGRAM THINKS IT'S RUNNING - BUT IT'S NOT...
 1) run the command: rm OTFFT_running
 
 
-MANUALLY STOPPING THE PROGRAM:
-The processes started by this script are nohupped and therefore a bit hard to kill manually.
-If you need to kill this after it has started running:
+MANUALLY STOPPING THE PROGRAM WHEN THE KILL BUTTON GIVES AN ERROR:
+
+1) First try running the program wil a --kill flag:
+
+OTF_GUI --kill
+
+If that doesn't work it can be done manually:
 
 1) run the the command: ps -uef | grep new_OTF 
 2) get the PID of the running script from the output: 
