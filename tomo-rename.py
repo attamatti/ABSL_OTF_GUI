@@ -3,15 +3,17 @@
 # give tomography files from serialEM reasonable names
 
 import os                      # for running UNIX commands
-import sys                      # for lots if utilities
-vers = '0.2.2'                  #version number
+import sys                     # for lots if utilities
+import glob                     # for finding files
+vers = '0.2.3'                  #version number
 
-if len(sys.argv) < 2:                       # make sure there are files specified
-    sys.exit('USAGE: tomo-rename <files search string>')    # print help message if not
-try:                                        # error checking
-    files = sys.argv[1:]                         # get all the mrcs put in list
-except:                                      # error out if can't find any files
-    sys.exit("ERROR: couldn't find any files to operate on")    # error message
+try:
+    files = glob.glob(sys.argv[1])                                       # get all the mrcs put in list
+except:                                                                  # error checking
+    sys.exit('USAGE: tomo-rename <files search string>')                 # print help message if in error                                                        
+
+if len(files) == 0:                                                  # if there are no files
+    sys.exit("STOP: rename couldn't find any files to operate on")   # quit and say so
 
 print(':: Tomo rename vers {0}::'.format(vers))         # welcome message
 print('operating on {0} files'.format(len(files)))      # update user on how many files were found
