@@ -4,7 +4,7 @@ Pixel size (A): == 1.065
 Bfactor: == 150
 Binning factor: == 1
 Do dose-weighting? == Yes
-Use RELION's own implementation? == Yes
+Use RELION's own implementation? == No
 Submit to queue? == No
 Dose per frame (e/A2): == 1
 First frame for corrected sum: == 1
@@ -18,7 +18,7 @@ Group frames: == 1
 Input movies STAR file: == Import/job001/movies.star
 Last frame for corrected sum: == -1
 Minimum dedicated cores per node: == 1
-Number of MPI procs: == 16
+Number of MPI procs: == 4
 Number of threads: == 1
 Additional arguments: == 
 Other MOTIONCOR2 arguments == 

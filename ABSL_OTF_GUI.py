@@ -103,7 +103,7 @@ PN = Entry(root,width=50)
 PN.grid(column=1,row=2,columnspan=2)
 
 def PNhelp():
-    messagebox.showinfo("Help","Give a name for you project directory\n files will be saved in <username>/<projectname>/")
+    messagebox.showinfo("Help","Give a name for you project directory\n files will be saved in <username>/<today's_date>_<projectname>/")
 PNhelp = Button(root,text = "help", command = PNhelp)
 PNhelp.grid(column=4,row=2)
 
@@ -214,6 +214,9 @@ def do_it():
     
     ## choose which script to use for data type
     dtval = dtvariable.get()
+    if dtval == 'Tomography (FEI)' and dataval.split('/')[-1] == 'Batch':
+        messagebox.showerror('ERROR','It appears you have selected the Batch directory to pull data from.\nThe tomo data are generally stored one directory up.')
+        datacheck = False
     scripts = {'Single particle (EPU)':'new_OTF.sh','Tomography (FEI)':'new_OTF_tomo.sh','Tomography (SerialEM)':'new_OTF_tomo_SerialEM.sh'}
     submission_path= '{0}{1}'.format(filespath,scripts[dtval])
 
