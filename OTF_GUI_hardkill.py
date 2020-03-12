@@ -27,6 +27,7 @@ if len(PIDs) > 0:
 
 #### kill any rsync running 
 subprocess.call('pkill rsync',shell=True)
+print('KILL: stopped all file syncing')
 
 #### remove OTFFT_running file if it exists
 if os.path.isfile('OTFFT_running') == True:

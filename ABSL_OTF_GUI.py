@@ -10,7 +10,7 @@ import sys
 import glob
 
 ## for debugging
-vers = '0.9.5.r'
+vers = '0.9.6.r'
 debug = False
 if '--debug' in sys.argv:
     print('''
@@ -89,7 +89,7 @@ btn = Button(root, text="Select dir", command=getdata)
 btn.grid(column=3, row=1)
 
 def datahelp():
-    messagebox.showinfo("Help","Select your data from the offload server\nit will be in /offload1 (Krios 1) or /offload2 (Krios 2)")
+    messagebox.showinfo("Help","Select your data from the offload server\nit will be in /offload1 (Krios 1) or /offload2 (Krios 2)\n ** Make sure to double click on the directory you want to select **")
 datahelp = Button(root,text = "help", command = datahelp)
 datahelp.grid(column=4,row=1)
 
@@ -238,20 +238,7 @@ def do_it():
 
 ## kill function - only active if running
 def kill():
-    running = str(subprocess.check_output(["ps","-uef"])).split("\\n")
-    for i in running:
-        line = i.split()
-        if 'new_OTF' in i:
-            PID = line[1]
-    try:
-        subprocess.call('kill -9 {0}'.format(PID),shell=True)
-        subprocess.call('pkill rsync',shell=True)
-        subprocess.call('rm OTFFT_running',shell=True)
-        print('OTF file transfer has been stopped')
-        runmsg.config(text='File transfer killed; restart the GUI to begin again',foreground='red')
-
-    except:
-        messagebox.showerror("ERROR","Some sort of error has occured\nERROR: please kill the job manually and restart the GUI")
+    subprocess.call('./OTF_GUI_hardkill.py',shell=True)
 
 doit = Button(root, text="Run", command=do_it,width=20)
 doit.grid(column=1, row=7)
@@ -274,7 +261,7 @@ if os.path.isfile('OTFFT_running') == True:
         destination.config(state='disabled')
         dtvariable.set(vals[4])
     except:
-        sys.exit('\nERROR: There was a problem reading OTFFT_running\nERROR: delete it, manually kill any file transfer (see README), and start over')
+        sys.exit('\nERROR: There was a problem reading OTFFT_running\nERROR: delete it, manually kill any file transfer (see help), and start over')
 
 
 
