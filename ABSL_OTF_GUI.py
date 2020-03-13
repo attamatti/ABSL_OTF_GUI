@@ -10,7 +10,7 @@ import sys
 import glob
 
 ## for debugging
-vers = '0.9.6.r'
+vers = '0.9.7.L'
 debug = False
 if '--debug' in sys.argv:
     print('''
@@ -83,6 +83,7 @@ data.grid(column=1,row=1,columnspan=2)
 data.configure(background='white')
 
 def getdata():
+   data.delete(0,END)
    folder_selected = filedialog.askdirectory()
    data.insert(0,folder_selected)
 btn = Button(root, text="Select dir", command=getdata)
@@ -238,7 +239,7 @@ def do_it():
 
 ## kill function - only active if running
 def kill():
-    subprocess.call('./OTF_GUI_hardkill.py',shell=True)
+    subprocess.call('{0}OTF_GUI_hardkill.py'.format(filespath),shell=True)
 
 doit = Button(root, text="Run", command=do_it,width=20)
 doit.grid(column=1, row=7)
