@@ -18,7 +18,7 @@ Which GPUs to use: == 0:1:2:3
 Input micrographs STAR file: == MotionCorr/job002/corrected_micrographs.star
 Voltage (kV): == 300
 Minimum dedicated cores per node: == 1
-Number of MPI procs: == 8
+Number of MPI procs: == 4
 Additional arguments: == 
 Other Gctf options: == 
 Phase shift (deg) - Max: == 180
